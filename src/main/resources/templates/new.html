@@ -30,6 +30,14 @@
                     <td><input type="text" name="email"></td>
                 </tr>
                 <tr>
+                    <th>Roles</th>
+                    <td>
+                        <select name="roles" multiple>
+                            <option th:each="role : ${roles}" th:value="${role}" th:text="${role.name}"></option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
                     <td colspan="2"><input type="submit" value="Create!"></td>
                 </tr>
             </table>

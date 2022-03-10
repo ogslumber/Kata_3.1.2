@@ -1,11 +1,13 @@
 package ru.kata.spring.boot_security.demo.dao;
 
+import ru.kata.spring.boot_security.demo.model.Role;
 import ru.kata.spring.boot_security.demo.model.User;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.List;
+import java.util.Set;
 
 @Component
 public class UserDaoImpl implements UserDao {
@@ -50,5 +52,6 @@ public class UserDaoImpl implements UserDao {
         dbUser.setFirstName(user.getFirstName());
         dbUser.setLastName(user.getLastName());
         dbUser.setEmail(user.getEmail());
+        dbUser.setRoles((Set<Role>) user.getAuthorities());
     }
 }

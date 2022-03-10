@@ -15,7 +15,7 @@
                 </tr>
                 <tr>
                     <th>Password</th>
-                    <td><input type="text" th:field="*{password}"></td>
+                    <td><input type="password" th:field="*{password}"></td>
                 </tr>
                 <tr>
                     <th>First Name</th>
@@ -28,6 +28,14 @@
                 <tr>
                     <th>Email</th>
                     <td><input type="text" th:field="*{email}"></td>
+                </tr>
+                <tr>
+                    <th>Roles</th>
+                    <td>
+                        <select name="roles" multiple>
+                            <option th:each="role : ${roles}" th:value="${role}" th:text="${role.name}"></option>
+                        </select>
+                    </td>
                 </tr>
                 <tr>
                     <td colspan="2"><input type="submit" value="Update!"></td>

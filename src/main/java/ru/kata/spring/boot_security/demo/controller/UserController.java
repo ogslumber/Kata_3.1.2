@@ -2,6 +2,7 @@ package ru.kata.spring.boot_security.demo.controller;
 
 import org.springframework.security.core.context.SecurityContextHolder;
 import ru.kata.spring.boot_security.demo.model.User;
+import ru.kata.spring.boot_security.demo.service.RoleService;
 import ru.kata.spring.boot_security.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,10 +13,12 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/")
 public class UserController {
     private final UserService userService;
+    private final RoleService roleService;
 
     @Autowired
-    public UserController(UserService userService) {
+    public UserController(UserService userService, RoleService roleService) {
         this.userService = userService;
+        this.roleService = roleService;
     }
 
     @RequestMapping
@@ -38,6 +41,7 @@ public class UserController {
     @GetMapping("admin/user/new")
     public String newUser(Model model) {
         model.addAttribute("user", new User());
+        model.addAttribute("roles", roleService.get());
         return "new";
     }
 
@@ -50,6 +54,7 @@ public class UserController {
     @GetMapping("admin/user/{id}/edit")
     public String edit(@PathVariable("id") long id, Model model) {
         model.addAttribute("user", userService.get(id));
+        model.addAttribute("roles", roleService.get());
         return "edit";
     }
 
