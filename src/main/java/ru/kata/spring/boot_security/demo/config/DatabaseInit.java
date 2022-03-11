@@ -19,6 +19,9 @@ public class DatabaseInit implements InitializingBean {
     private final UserService userService;
     private final RoleService roleService;
 
+    private final static String admEmail = "admin@mail.ru";
+    private final static String usrEmail = "user@mail.ru";
+
     @Autowired
     public DatabaseInit(UserService userService, RoleService roleService) {
         this.userService = userService;
@@ -45,13 +48,13 @@ public class DatabaseInit implements InitializingBean {
         Role adminRole = (Role) dbRoles.stream().filter(r -> r.getName().equals("ADMIN")).toArray()[0];
         Role userRole = (Role) dbRoles.stream().filter(r -> r.getName().equals("USER")).toArray()[0];
 
-        if (dbUsers.stream().noneMatch(r -> r.getUsername().equals("admin"))) {
-            User adminUser = new User("admin", "admin", "Иван", "Иванов", "mail@mail.com", Set.of(adminRole, userRole));
+        if (dbUsers.stream().noneMatch(r -> r.getUsername().equals(admEmail))) {
+            User adminUser = new User(admEmail, "admin", "Иван", "Иванов", Set.of(adminRole, userRole));
             userService.create(adminUser);
         }
 
-        if (dbUsers.stream().noneMatch(r -> r.getUsername().equals("user"))) {
-            User regularUser = new User("user", "user", "Марья", "Марьева", "email@mail.com", Set.of(userRole));
+        if (dbUsers.stream().noneMatch(r -> r.getUsername().equals(usrEmail))) {
+            User regularUser = new User(usrEmail, "user", "Марья", "Марьева", Set.of(userRole));
             userService.create(regularUser);
         }
     }

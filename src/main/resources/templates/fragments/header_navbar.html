@@ -1,0 +1,16 @@
+<nav class="navbar navbar-dark bg-dark pl">
+    <div class="container-fluid">
+        <div class="navbar-brand ms-2">
+            <span class="fw-bold" th:text="${#authentication.principal.email}"></span>
+            <span>with roles: </span>
+            <span th:text="${#strings.listJoin(#authentication.authorities, ' ')}">ROLE THERE</span>
+        </div>
+        <ul class="navbar-nav me-2">
+            <li class="nav-item">
+                <form th:action="@{/logout}" method="post">
+                    <button class="btn btn-link nav-link" type="submit">Logout</button>
+                </form>
+            </li>
+        </ul>
+    </div>
+</nav>

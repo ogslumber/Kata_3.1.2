@@ -1,0 +1,28 @@
+<h1>User Page</h1>
+<div class="border bg-white">
+    <div class="container-fluid p-3 border-bottom bg-light">
+        <h5 class="m-0">About User</h5>
+    </div>
+    <div class="container-fluid p-3">
+        <table class="table table-striped border-2 border-top mb-0">
+            <thead style="border-bottom-width: 2px;">
+            <tr>
+                <th>ID</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Email</th>
+                <th>Roles</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td th:text="${#authentication.principal.id}"></td>
+                <td th:text="${#authentication.principal.firstName}"></td>
+                <td th:text="${#authentication.principal.lastName}"></td>
+                <td th:text="${#authentication.principal.email}"></td>
+                <td th:text="${#strings.listJoin(#authentication.authorities, ' ')}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

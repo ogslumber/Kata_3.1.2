@@ -1,7 +1,7 @@
 package ru.kata.spring.boot_security.demo.controller;
 
-import org.springframework.security.core.context.SecurityContextHolder;
 import ru.kata.spring.boot_security.demo.model.User;
+import ru.kata.spring.boot_security.demo.service.RoleService;
 import ru.kata.spring.boot_security.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,56 +12,37 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/")
 public class UserController {
     private final UserService userService;
+    private final RoleService roleService;
 
     @Autowired
-    public UserController(UserService userService) {
+    public UserController(UserService userService, RoleService roleService) {
         this.userService = userService;
+        this.roleService = roleService;
     }
 
-    @RequestMapping
-    public String redirectUnmapped() {
-        return "redirect:/user";
-    }
-
-    @GetMapping("user")
-    public String user(Model model) {
-        model.addAttribute("user", SecurityContextHolder.getContext().getAuthentication().getPrincipal());
-        return "user";
-    }
-
-    @GetMapping("admin")
+    @GetMapping()
     public String index(Model model) {
-        model.addAttribute("users", userService.get());
-        return "admin";
+        model.addAttribute("allUsers", userService.get());
+        model.addAttribute("newUser", new User());
+        model.addAttribute("roles", roleService.get());
+        return "index";
     }
 
-    @GetMapping("admin/user/new")
-    public String newUser(Model model) {
-        model.addAttribute("user", new User());
-        return "new";
-    }
-
-    @PostMapping("admin/user")
+    @PostMapping("user")
     public String create(@ModelAttribute("user") User user) {
         userService.create(user);
-        return "redirect:/admin";
+        return "redirect:/";
     }
 
-    @GetMapping("admin/user/{id}/edit")
-    public String edit(@PathVariable("id") long id, Model model) {
-        model.addAttribute("user", userService.get(id));
-        return "edit";
-    }
-
-    @PatchMapping("admin/user/{id}")
+    @PatchMapping("user/{id}")
     public String update(@PathVariable("id") long id, @ModelAttribute("user") User user) {
         userService.update(id, user);
-        return "redirect:/admin";
+        return "redirect:/";
     }
 
-    @DeleteMapping("admin/user/{id}")
+    @DeleteMapping("user/{id}")
     public String delete(@PathVariable("id") long id) {
         userService.remove(id);
-        return "redirect:/admin";
+        return "redirect:/";
     }
 }
