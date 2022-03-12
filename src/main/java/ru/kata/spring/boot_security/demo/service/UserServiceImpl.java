@@ -48,7 +48,7 @@ public class UserServiceImpl implements UserService {
         user.setPassword(encoder.encode(user.getPassword()));
 
         // Set specified roles or USER role.
-        if (user.getAuthorities() != null) {
+        if (user.getAuthorities() != null && user.getAuthorities().size() != 0) {
             user.setRoles(
                 user.getAuthorities().stream()
                     .map(a -> (Role) a)
@@ -81,7 +81,7 @@ public class UserServiceImpl implements UserService {
         }
 
         // Set specified roles or roles from DB.
-        if (user.getAuthorities() != null) {
+        if (user.getAuthorities() != null && user.getAuthorities().size() != 0) {
             user.setRoles(
                 user.getAuthorities().stream()
                     .map(a -> (Role) a)
